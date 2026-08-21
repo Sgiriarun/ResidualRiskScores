@@ -1,0 +1,59 @@
+{
+  "seed": 2026,
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "dimensions": [2, 4, 8, 16, 32],
+  "ridge_alphas": [0.001, 0.01, 0.1, 1.0],
+  "bootstrap_replicates": 1000,
+  "horizon_years": 10.0,
+  "endpoint": {
+    "codes": ["001", "005"],
+    "name": "heart_or_stroke_death",
+    "label": "heart-or-stroke deaths",
+    "description": "fatal heart-or-cerebrovascular mortality proxy"
+  },
+  "sensitivity_endpoints": {
+    "heart_only": {
+      "codes": ["001"],
+      "name": "heart_disease_death",
+      "label": "heart-disease deaths"
+    }
+  },
+  "event_count_grid": [40, 80, 120, 160, 192],
+  "event_count_repeats": 5,
+  "ae": {
+    "hidden_dimension": 128,
+    "epochs": 80,
+    "patience": 8,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  },
+  "ai_experiment": {
+    "dimension": 8,
+    "hidden_dimension": 128,
+    "epochs": 30,
+    "risk_finetune_epochs": 15,
+    "batch_size": 256,
+    "contrastive_batch_size": 128,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "ridge_alpha": 0.1,
+    "mask_blocks": 6,
+    "mask_block_minutes": 30,
+    "contrastive_temperature": 0.2,
+    "risk_loss_weight": 0.05,
+    "risk_beta_ridge": 0.1
+  },
+  "smoke": {
+    "outer_folds": 2,
+    "inner_folds": 2,
+    "dimensions": [2, 4],
+    "ridge_alphas": [0.01, 0.1],
+    "bootstrap_replicates": 30,
+    "non_events": 650,
+    "ae_epochs": 3,
+    "ai_epochs": 2,
+    "ai_risk_epochs": 2
+  }
+}

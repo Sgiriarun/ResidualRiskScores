@@ -1,0 +1,24 @@
+.DS_Store
+.venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Downloaded, participant-level, and intermediate analysis data
+analysis/data/
+analysis/cache/
+analysis/predictions/
+analysis/tables/
+analysis/figures/
+
+# LaTeX build intermediates
+*.aux
+*.blg
+*.log
+*.out
+*.xdv
+*.synctex.gz
+
+# Local temporary output
+tmp/

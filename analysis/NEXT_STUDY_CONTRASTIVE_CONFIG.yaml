@@ -1,0 +1,68 @@
+{
+  "status": "prospectively_locked_for_next_independent_study",
+  "lock_date": "2026-07-21",
+  "source_analysis": "post-hoc NHANES 2003-2006 contrastive augmentation ablation",
+  "input": {
+    "representation": "wear-aware 1440-minute average-day activity profile",
+    "missing_nonwear_as_zero": false,
+    "training_scaling_only": true
+  },
+  "encoder": {
+    "objective": "contrastive",
+    "input_dimension": 1440,
+    "hidden_dimension": 128,
+    "embedding_dimension": 8,
+    "projector_dimensions": [32, 16],
+    "epochs": 30,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "temperature": 0.2
+  },
+  "augmentations": {
+    "block_masking": {
+      "enabled": true,
+      "blocks": 6,
+      "block_minutes": 30
+    },
+    "activity_scaling": {
+      "enabled": true,
+      "minimum": 0.9,
+      "maximum": 1.1
+    },
+    "gaussian_noise": {
+      "enabled": false,
+      "standard_deviation": 0.0
+    },
+    "circular_time_shift": {
+      "enabled": true,
+      "minimum_minutes": -30,
+      "maximum_minutes": 30
+    }
+  },
+  "risk_extension": {
+    "clinical_offset": "published PREDICT linear predictor",
+    "interpretable_features": ["M10", "L5", "RA"],
+    "ridge_alpha": 0.1,
+    "baseline_hazard": "estimated using training participants only"
+  },
+  "evaluation": {
+    "outer_folds": 5,
+    "training_seeds": [1, 2, 3, 4, 5],
+    "select_best_seed": false,
+    "bootstrap_replicates": 1000,
+    "required_comparators": [
+      "PREDICT",
+      "PREDICT plus M10/L5/RA",
+      "PREDICT plus M10/L5/RA plus reconstruction AE-8",
+      "PREDICT plus M10/L5/RA plus locked contrastive-8"
+    ],
+    "required_metrics": [
+      "paired C-index change",
+      "calibration slope",
+      "calibration-in-the-large",
+      "IPCW Brier score",
+      "decision-curve net benefit"
+    ]
+  }
+}
